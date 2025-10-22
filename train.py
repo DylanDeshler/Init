@@ -59,3 +59,4 @@ state_dict = model.state_dict()
 for k, v in state_dict.items():
     print(k, v.shape)
 
+print(model.parameters.numel())
