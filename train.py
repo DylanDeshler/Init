@@ -7,6 +7,8 @@ from torchinfo import summary
 import numpy as np
 from cnn import convnext_tiny
 
+device = torch.device('cuda')
+
 digit_transform = v2.Compose([
     v2.ToImage(),
     v2.ToDtype(torch.uint8, scale=True),
@@ -43,6 +45,7 @@ train_loader = torch.utils.data.DataLoader(
     batch_size=64,
     shuffle=True,
     pin_memory=True,
+    pin_memory_device=device,
     drop_last=True
 )
 
@@ -50,7 +53,8 @@ test_loader = torch.utils.data.DataLoader(
     test_data,
     batch_size=64,
     shuffle=False,
-    pin_memory=True
+    pin_memory=True,
+    pin_memory_device=device
 )
 
 def generate_eps(state_dict, standard_deviation):
@@ -62,7 +66,7 @@ def evolve(state_dict, eps, learning_rate, standard_deviation):
     weights += learning_rate / (weights.numel() * standard_deviation)
     return weights
 
-model = convnext_tiny(num_classes=10)
+model = convnext_tiny(num_classes=10).to(device)
 state_dict = model.state_dict()
 
 for k, v in state_dict.items():
