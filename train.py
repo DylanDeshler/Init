@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 import torchvision.datasets as datasets
 from torchvision.transforms import v2
 
@@ -54,10 +55,24 @@ def evolve(state_dict, eps, learning_rate, standard_deviation):
     weights += learning_rate / (weights.numel() * standard_deviation)
     return weights
 
-model = convnext_tiny()
+model = convnext_tiny(num_classes=10)
 state_dict = model.state_dict()
 
 for k, v in state_dict.items():
     print(k, v.shape)
 
 summary(model)
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
+
+for epoch in range(100):
+    losses = []
+    for X, y in train_loader:
+        optimizer.zero_grad()
+        y_hat = model(X)
+        loss = F.cross_entropy(y_hat, y)
+        loss.backward()
+        
+        losses.append(loss.item())
+    print(np.mean(losses))
+        
