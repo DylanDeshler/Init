@@ -166,7 +166,7 @@ class LayerNorm(nn.Module):
             return x
 
 def convnext_tiny(checkpoint=None, **kwargs):
-    model = ConvNeXt(depths=[3, 3, 9, 3], dims=[32, 64, 128, 256], **kwargs)
+    model = ConvNeXt(depths=[2, 2, 6, 2], dims=[32, 64, 128, 256], **kwargs)
     if checkpoint is not None:
         model.load_state_dict(checkpoint["model"])
     return model

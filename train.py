@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import torchvision.datasets as datasets
 from torchvision.transforms import v2
 
+from tqdm import tqdm
 from torchinfo import summary
 import numpy as np
 from cnn import convnext_tiny
@@ -79,7 +80,7 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
 
 for epoch in range(100):
     losses = []
-    for X, y in train_loader:
+    for X, y in tqdm(train_loader):
         X = X.to(device)
         y = y.to(device)
         
