@@ -80,6 +80,9 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
 for epoch in range(100):
     losses = []
     for X, y in train_loader:
+        X = X.to(device)
+        y = y.to(device)
+        
         optimizer.zero_grad()
         y_hat = model(X)
         loss = F.cross_entropy(y_hat, y)
