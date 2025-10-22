@@ -7,7 +7,8 @@ from torchinfo import summary
 import numpy as np
 from cnn import convnext_tiny
 
-device = torch.device('cuda')
+device_type = 'cuda'
+device = torch.device(device_type)
 
 digit_transform = v2.Compose([
     v2.ToImage(),
@@ -45,7 +46,7 @@ train_loader = torch.utils.data.DataLoader(
     batch_size=64,
     shuffle=True,
     pin_memory=True,
-    pin_memory_device=device,
+    pin_memory_device=device_type,
     drop_last=True
 )
 
@@ -54,7 +55,7 @@ test_loader = torch.utils.data.DataLoader(
     batch_size=64,
     shuffle=False,
     pin_memory=True,
-    pin_memory_device=device
+    pin_memory_device=device_type
 )
 
 def generate_eps(state_dict, standard_deviation):
