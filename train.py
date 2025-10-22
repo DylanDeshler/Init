@@ -69,6 +69,7 @@ def evolve(state_dict, eps, learning_rate, standard_deviation):
     return weights
 
 model = convnext_tiny(num_classes=10).to(device)
+model = torch.compile(model)
 state_dict = model.state_dict()
 
 for k, v in state_dict.items():
