@@ -11,6 +11,7 @@ digit_transform = v2.Compose([
     v2.ToImage(),
     v2.ToDtype(torch.uint8, scale=True),
     v2.RandomAffine(degrees=5, translate=(0.1, 0.1)),
+    v2.Lambda(lambda x: x.repeat(3, 1, 1)),
     v2.ToDtype(torch.float32, scale=True),
     v2.Normalize((0.5,), (0.5,)),
 ])
@@ -20,11 +21,13 @@ fashion_transform = v2.Compose([
     v2.ToDtype(torch.uint8, scale=True),
     v2.RandomHorizontalFlip(0.5),
     v2.RandomAffine(degrees=5, translate=(0.1, 0.1)),
+    v2.Lambda(lambda x: x.repeat(3, 1, 1)),
     v2.ToDtype(torch.float32, scale=True),
     v2.Normalize((0.5,), (0.5,)),
 ])
 
 test_transform = v2.Compose([
+    v2.Lambda(lambda x: x.repeat(3, 1, 1)),
     v2.ToDtype(torch.float32, scale=True),
     v2.Normalize((0.5,), (0.5,)),
 ])
