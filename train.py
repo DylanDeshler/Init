@@ -2,6 +2,7 @@ import torch
 import torchvision.datasets as datasets
 from torchvision.transforms import v2
 
+from torchinfo import summary
 import numpy as np
 from cnn import convnext_tiny
 
@@ -59,4 +60,4 @@ state_dict = model.state_dict()
 for k, v in state_dict.items():
     print(k, v.shape)
 
-print(model.parameters().numel())
+summary(model)
