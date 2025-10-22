@@ -48,7 +48,7 @@ def generate_eps(state_dict, standard_deviation):
     eps = standard_deviation * np.random.randn(state_dict.shape)
     return eps
 
-def evolve(state_dict, eps, learning_rate, standard_deviation)
+def evolve(state_dict, eps, learning_rate, standard_deviation):
     scores = (scores * eps).sum()
     weights += learning_rate / (weights.numel() * standard_deviation)
     return weights
