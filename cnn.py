@@ -46,7 +46,7 @@ class Block(nn.Module):
         dim (int): Number of input channels.
         layer_scale_init_value (float): Init value for Layer Scale. Default: 1e-6.
     """
-    def __init__(self, dim, layer_scale_init_value=1e-6):
+    def __init__(self, dim, layer_scale_init_value=1e-6, drop_path=0.):
         super().__init__()
         self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, padding=3, groups=dim) # depthwise conv
         self.norm = LayerNorm(dim, eps=1e-6)
